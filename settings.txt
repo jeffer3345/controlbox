@@ -1,0 +1,7 @@
+// Crear base de datos con usuario y contraseña
+
+createdb -h localhost -p 5432 -U michael.restrepo -W -e controlbox
+
+// PWD 
+
+123456
