@@ -7,6 +7,7 @@ export type CommentType = {
   userId: string;
   bookId: string;
   user: UserType;
+  createdAt: string;
 };
 
 export type BookType = {
@@ -16,4 +17,10 @@ export type BookType = {
   images: string[];
   authorName: string;
   comments: CommentType[];
+  categories: CategoriesType[];
+};
+
+export type CategoriesType = {
+  id: string;
+  name: string;
 };

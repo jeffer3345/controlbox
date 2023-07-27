@@ -1,19 +1,41 @@
 import React from "react";
 import Router from "next/router";
-import ReactMarkdown from "react-markdown";
 import { BookType } from "../shared";
 
-const Post: React.FC<{ book: BookType }> = ({ book }) => {
-  const { authorName, images, description, id, title } = book ?? {};
+const Book: React.FC<{ book: BookType }> = ({ book }) => {
+  const { authorName, images, description, id, title, categories } = book ?? {};
 
   return (
-    <div onClick={() => Router.push("/book/[id]", `/book/${id}`)}>
-      <img src={images[0]} />
-      <h2>{title}</h2>
-      <small>By {authorName}</small>
-      <ReactMarkdown children={description} />
+    <div
+      className="cursor-pointer"
+      onClick={() => Router.push("/book/[id]", `/book/${id}`)}
+    >
+      <div className="w-full bg-cover h-64 flex items-center overflow-hidden">
+        <img src={images[0]} />
+      </div>
+      <div className="p-2">
+        <h2>{title}</h2>
+        <small className="text-gray-400 text-xs">Autor: {authorName}</small>
+
+        <div className="flex mt-2 gap-2 flex-wrap">
+          {categories.map((item) => {
+            return (
+              <p
+                key={item.id}
+                style={{
+                  paddingTop: "0.1em",
+                  paddingBottom: "0.1rem",
+                }}
+                className="text-xs px-3 w-auto bg-gray-200 text-gray-800 rounded-full"
+              >
+                {item.name}
+              </p>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Post;
+export default Book;

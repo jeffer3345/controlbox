@@ -9,22 +9,31 @@ datasource db {
 }
 
 model Books {
-  id          String     @id @default(cuid())
+  id          String       @id @default(cuid())
   title       String
   description String?
   images      String[]
   authorName  String?
+  categories  Categories[]
   comments    Comments[]
 }
 
+model Categories {
+  id      String  @id @default(cuid())
+  name    String
+  Books   Books?  @relation(fields: [booksId], references: [id])
+  booksId String?
+}
+
 model Comments {
-  id      String @id @default(cuid())
-  comment String
-  score   Int
-  userId  String
-  bookId  String
-  user    User?  @relation(fields: [userId], references: [id])
-  book    Books? @relation(fields: [bookId], references: [id])
+  id        String   @id @default(cuid())
+  comment   String
+  score     Int
+  userId    String?
+  bookId    String
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+  book      Books?   @relation(fields: [bookId], references: [id])
 }
 
 model User {
