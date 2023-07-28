@@ -29,7 +29,7 @@ const UserProfile = () => {
         <div className="inline-flex items-center h-full ml-5 lg:w-2/5 lg:justify-end lg:ml-0">
           <Link href="/api/auth/signin">
             <a
-              className="pt-1 ml-2 font-bold text-xs"
+              className="pt-1 ml-2 font-bold text-xs text-white"
               data-active={isActive("/signup")}
             >
               Ingresar
