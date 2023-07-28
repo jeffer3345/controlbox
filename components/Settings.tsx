@@ -6,6 +6,7 @@ const Settings = () => {
     <Head>
       <html className="dark" />
     </Head>
+    
   );
 };
 

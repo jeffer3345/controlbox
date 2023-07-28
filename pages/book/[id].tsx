@@ -7,6 +7,7 @@ import { BookType } from "../../shared";
 import { parseISO, format } from "date-fns";
 import CreateComment from "../../components/CreateComment";
 import { useSession } from "next-auth/react";
+import CommentItem from "../../components/comments";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const book = await prisma.books.findUnique({
@@ -54,44 +55,44 @@ const Book: React.FC<BookType> = (props) => {
 
   return (
     <Layout>
-      <div>
-        <img src={images[0]} />
-        <h2>{title}</h2>
-        <p>By {authorName || "Unknown author"}</p>
-        <ReactMarkdown children={description} />
-        <h2>Categorias: </h2>
-        {categories.map((item) => {
-          return (
-            <div>
-              <p>{item.name}</p>
+      <section className="bg-white dark:bg-gray-900">
+        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+          <div className="mr-auto place-self-center lg:col-span-7">
+            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+              {title}
+            </h1>
+            <p className="dark:text-white">
+              Autor {authorName || "Unknown author"}
+            </p>
+            <div className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+              <ReactMarkdown children={description} />
             </div>
-          );
-        })}
-
-        {comments.map((item) => {
-          const { score, comment, user, createdAt } = item ?? {};
-          const { name, image } = user ?? {};
-          const date = parseISO(createdAt);
-
-          return (
             <div>
-              <img
-                className="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
-                src={image}
-              />
-              <p>
-                createAt:{" "}
-                <time dateTime={createdAt}>{format(date, "LLLL d, yyyy")}</time>
-                ;
-              </p>
-              <p>Score: {score}</p>
-              <p>Comment: {comment}</p>
-              <p>By: {name}</p>
+              {categories.map((item) => {
+                return (
+                  <button
+                    key={item.id}
+                    className="relative flex items-center  text-sm py-1 px-1 overflow-hidden border rounded-lg border-green-500 bg-green-500 text-white shadow-2xl transition-all  hover:shadow-green-500 "
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
             </div>
-          );
-        })}
-        <CreateComment bookId={id} />
-      </div>
+            <div>
+              {comments.map((item) => {
+                return <CommentItem key={item.id} {...item} />;
+              })}
+            </div>
+            <div className="my-4">
+              <CreateComment bookId={id} />
+            </div>
+          </div>
+          <div className="hidden lg:mt-0 lg:col-span-5 lg:flex rounded-lg border-radius:4.5rem h-3/6">
+            <img style={{height:"500px"}} src={images[0]} className="rounded-lg" />
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };

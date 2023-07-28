@@ -21,7 +21,7 @@ model Books {
 model Categories {
   id      String  @id @default(cuid())
   name    String
-  Books   Books?  @relation(fields: [booksId], references: [id])
+  Books   Books[]
   booksId String?
 }
 

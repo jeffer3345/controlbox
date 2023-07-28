@@ -49,7 +49,7 @@ const UserProfile = () => {
         <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
           <img src={session.user.image} alt="profilepic" />
         </div>
-        <span className="pt-1 ml-2 font-bold text-xs">{session.user.name}</span>
+        <span className="pt-1 ml-2 font-bold text-xs text-white">{session.user.name}</span>
       </div>
 
       <UserProfileActions
